@@ -18,7 +18,7 @@ __
 
 ## Background
 
-A two year sales history was examined in a series of tables stored in a database.  The data provided focused primarly on sales information and did not include cost of goods, so ways were examined to maximize revenues in an effort to improve margins.
+A two year sales history was examined in a series of tables stored in a database.  The data provided focused primarly on sales information and did not include cost of goods, so ways were examined to maximize revenues in an effort to improve margins.  Several theories were developed and hypothesis were formed around ways to improve revenues.
 
 # Questions to be answered through hypothesis a/b testing:
 
