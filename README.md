@@ -1,7 +1,5 @@
 # Hypothesis Testing
 
-## Description
-SQL data extraction for performing A/B Testing to inform buisiness decisions making for global retailer.
 ___
 ## Main Files:
 
@@ -12,33 +10,32 @@ Mod_3_preso.pdf - presentation summarizing findings for a non-technical audience
 Additional Files
 Blog Post: Categorical Data
 ____
+
+## Description
+SQL data extraction for performing A/B Testing to inform buisiness decisions making for global retailer. 
+
+__
+
+## Background
+
+Since the data provided did not include cost of goods, ways were examined to maximize revenues.  
+
+# Questions to be answered through hypothesis a/b testing:
+
+> ***Does discount amount have a statistically significant effect on the quantity of a product in an order? If so, at what level(s) of discount?***
+> ***Do some categories generate more revenue than others ??*** 
+     **Which ones?**
+> ***Do certain sales representatives sell more than others?  Who are the top sellers?***
+> ***Where are our customers from that spend the most money?***
+
+
+___
 ### SQL Database Table Schematic Layout:
 
 <img src="https://raw.githubusercontent.com/jirvingphd/dsc-mod-3-project-online-ds-ft-100719/master/Northwind_ERD_updated.png">
 
 
-```python
-# !pip install -U fsds_100719
-# from fsds_100719.imports import *
 
-import pandas as pd
-
-```
-
-
-```python
-import functions as fn
-
-## Uncomment the line below to see the source code for the imported functions
-# fs.ihelp(Cohen_d,False),fs.ihelp(find_outliers_IQR,False), fs.ihelp(find_outliers_Z,False)
-```
-
-
-```python
-import sqlite3
-connect = sqlite3.connect('Northwind_small.sqlite')
-cur = connect.cursor()
-```
 
 # List of Tables:
 
@@ -48,23 +45,6 @@ cur.execute("""SELECT name FROM sqlite_master WHERE type='table';""")
 df_tables = pd.DataFrame(cur.fetchall(), columns=['Table'])
 df_tables
 ```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
 </style>
 <table border="1" class="dataframe">
   <thead>
@@ -139,23 +119,9 @@ df = pd.DataFrame(cur.fetchall(), columns=[x[0] for x in cur.description])
 df.head()
 
 ```
+### A look at the Orders Table:
 
 
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
 </style>
 <table border="1" class="dataframe">
   <thead>
