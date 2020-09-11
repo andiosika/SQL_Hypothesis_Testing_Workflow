@@ -1,4 +1,4 @@
-# Hypothesis Testing
+# Hypothesis Testing to Inform Business Intelligence
 
 ___
 ## Main Files:
@@ -18,7 +18,7 @@ __
 
 ## Background
 
-Since the data provided did not include cost of goods, ways were examined to maximize revenues.  
+A two year sales history was examined in a series of tables stored in a database.  The data provided focused primarly on sales information and did not include cost of goods, so ways were examined to maximize revenues in an effort to improve margins.
 
 # Questions to be answered through hypothesis a/b testing:
 
