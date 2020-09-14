@@ -22,11 +22,14 @@ A two year sales history was examined in a series of tables stored in a database
 
 # Questions to be answered through hypothesis a/b testing:
 
-> ***Does discount amount have a statistically significant effect on the quantity of a product in an order? If so, at what level(s) of discount?***
-> ***Do some categories generate more revenue than others ??*** 
+> 1) ***Does discount amount have a statistically significant effect on the quantity of a product in an order? If so, at what level(s) of discount?***
+
+> 2) ***Do some categories generate more revenue than others ??*** 
      **Which ones?**
-> ***Do certain sales representatives sell more than others?  Who are the top sellers?***
-> ***Where are our customers from that spend the most money?***
+     
+> 3) ***Do certain sales representatives sell more than others?  Who are the top sellers?***
+
+> 4) ***Where are our customers from that spend the most money?***
 
 
 ___
@@ -286,23 +289,6 @@ df.head()
 
 ```
 
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -365,32 +351,12 @@ df.head()
 </table>
 </div>
 
-
-
-
 ```python
 #explorting dataset
 specs = df.describe()
 specs
 ```
 
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1206,7 +1172,7 @@ plt.show()
 ```
 
 
-![png](output_68_0.png)
+<img src="https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_68_0.png">
 
 
 This plot may not best suit non-technical audience with the additional information potentially could cause confusion.  However, the above boxen plot clearly illustrates distributions as well as remaining potential outliers in the .05, .15, .2 and .25 groups.  These outliers will not be removed at the present moment with the intention to preserve as much of the initial dataset as possible.  Sample sizes can be referenced under 'Assumption 3: Normality' where this is observed.
@@ -1230,7 +1196,7 @@ plt.ylabel('Average Quantity Purchased')
 
 
 
-![png](output_70_1.png)
+<img src="https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_70_1.png">
 
 
 Effect Sizes: 
