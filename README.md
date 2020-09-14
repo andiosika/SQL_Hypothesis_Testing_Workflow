@@ -637,17 +637,12 @@ plt.title('Quantity Distribution')
 plt.legend()
 print('Distributions appear roughly equal,')
 ```
+ 
+ # Distributions appear roughly equal across all discount levels:
 
-    Distributions appear roughly equal,
-    
-
-
-![png](output_37_1.png)
-
+<img src="https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_37_1.png">
 
 ## Initial Observations:
-
-Datatype is numeric.  
 
 The average quantity ordered from this sample is : 24.0
 There are 2155 orders in this sample. 
@@ -672,23 +667,9 @@ Overall distributions appears relatively uniform.
 Assumptions for ANOVA Testing: 
 (see corresponding sections
 
-1) No significant outliers 
-    * Upon a quick visual inspection, the distribution is skewed and visually there appears to be some outliers
-
-2) Equal variance
-    * Lavene's testing demonstrates NOT equal variance
-
-
-3) Normality (if n>15)
-      * Not required for discounts: 5%, 10%, 15%, 20% and 25% since n > 15
-
-
-
-
 ### Assumption 1:  Outliers 
 
 Evaluation and removal via Z-Score testing:
-
 
 
 ```python
@@ -714,14 +695,12 @@ print('\n All of these outliers were removed')
 Levines testing conducted on cleaned dataset
 
 
-
 ```python
 #preparing data for levene's testing
 datad = []
 for k,v in discs.items():
     datad.append(v)
 ```
-
 
 ```python
 import scipy.stats as stats
@@ -812,19 +791,7 @@ disc_df
 
 
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
 </style>
 <table border="1" class="dataframe">
   <thead>
