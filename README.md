@@ -8,7 +8,7 @@ student.ipynb - Notebook inclues data, methodologies and modeling around hypothe
 Mod_3_preso.pdf - presentation summarizing findings for a non-technical audience
 
 Additional Files
-Blog Post: Categorical Data
+Blog Post: [All Data Is NOT Created Normal](https://andiosika.github.io/statistics_hypothesis_testing_alert_not_all_data_is_created_nomal)
 ____
 
 ## Description
@@ -237,33 +237,6 @@ df.head()
 </div>
 
 
-
-
-```python
-## looking at dates to get an idea of timeframe
-df['OrderDate']=pd.to_datetime(df['OrderDate'])
-```
-
-
-```python
-df['OrderDate'].describe()
-```
-
-
-
-
-    count                     830
-    unique                    480
-    top       2014-02-26 00:00:00
-    freq                        6
-    first     2012-07-04 00:00:00
-    last      2014-05-06 00:00:00
-    Name: OrderDate, dtype: object
-
-
-
-Timespan is ~ 2 years : April 7 2012 - June 5 2014
-
 # HYPOTHESIS 1
 
 > ***Does discount amount have a statistically significant effect on the quantity of a product in an order? If so, at what level(s) of discount?***
@@ -285,71 +258,9 @@ Once imported, the data will be grouped by discount level and the means of the q
 ```python
 cur.execute("""SELECT * FROM OrderDetail;""")
 df = pd.DataFrame(cur.fetchall(), columns=[x[0] for x in cur.description])
-df.head()
-
 ```
 
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Id</th>
-      <th>OrderId</th>
-      <th>ProductId</th>
-      <th>UnitPrice</th>
-      <th>Quantity</th>
-      <th>Discount</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>0</td>
-      <td>10248/11</td>
-      <td>10248</td>
-      <td>11</td>
-      <td>14.0</td>
-      <td>12</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>10248/42</td>
-      <td>10248</td>
-      <td>42</td>
-      <td>9.8</td>
-      <td>10</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>10248/72</td>
-      <td>10248</td>
-      <td>72</td>
-      <td>34.8</td>
-      <td>5</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>10249/14</td>
-      <td>10249</td>
-      <td>14</td>
-      <td>18.6</td>
-      <td>9</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>10249/51</td>
-      <td>10249</td>
-      <td>51</td>
-      <td>42.4</td>
-      <td>40</td>
-      <td>0.0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+
 
 ```python
 #explorting dataset
