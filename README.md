@@ -12,7 +12,7 @@ Blog Post: [All Data Is NOT Created Normal](https://andiosika.github.io/statisti
 ____
 
 ## Description
-SQL data extraction for performing A/B Testing to inform buisiness decisions making for global retailer. 
+***SQL Querying was performed for data extraction** for conducting A/B Testing to inform buisiness decisions making for global retailer. 
 
 __
 
@@ -352,7 +352,7 @@ With additional outliers removed for each of the discount groups, the revised av
  
 ###  Recommendation:
 
-While larger discounts did deomonstrate significant effect on quantity purchased, smaller discounts held a statistically equal effect.  To recognize the effect of driving higher quantities purchased and realize larger profit margins, offer the smaller discount.
+While larger discounts did deomonstrate significant effect on quantity purchased, smaller discounts held a statistically equal effect.  **To recognize the effect of driving higher quantities purchased and realize larger profit margins, offer the smaller discount(s).**
 
 
 # HYPOTHESIS 2:
@@ -367,145 +367,9 @@ While larger discounts did deomonstrate significant effect on quantity purchased
 - $𝐻1$ : Certain categories sell at statistically higher rates of revneu than others.
 - $𝐻1𝑎$ : 
 
-### Importing and inspecting data from Product and OrderDetail tables:
-
-These tables includes product information data including:
-
-1) Categories 
-
-2) Pricing and discount information to generate revenues
+For this round of testing the Product and OrderDetail tables were queried using SQL.  These tables includes product information data including: categories, pricing, and discount information to generate revenues.
 
 
-
-```python
-##clean sql notation
-cur.execute("""SELECT 
-                ProductId, 
-                ProductName, 
-                od.UnitPrice,
-                CategoryID, 
-                CategoryName, 
-                Discount, 
-                Quantity
-                FROM Product AS p
-                JOIN OrderDetail as od
-                ON p.ID = Od.ProductId
-                JOIN Category as c 
-                ON c.ID = p.CategoryID;""")
-catavs = pd.DataFrame(cur.fetchall(), columns=[x[0] for x in cur.description])
-catavs.head()
-```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>ProductId</th>
-      <th>ProductName</th>
-      <th>UnitPrice</th>
-      <th>CategoryId</th>
-      <th>CategoryName</th>
-      <th>Discount</th>
-      <th>Quantity</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>0</td>
-      <td>11</td>
-      <td>Queso Cabrales</td>
-      <td>14.0</td>
-      <td>4</td>
-      <td>Dairy Products</td>
-      <td>0.0</td>
-      <td>12</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>42</td>
-      <td>Singaporean Hokkien Fried Mee</td>
-      <td>9.8</td>
-      <td>5</td>
-      <td>Grains/Cereals</td>
-      <td>0.0</td>
-      <td>10</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>72</td>
-      <td>Mozzarella di Giovanni</td>
-      <td>34.8</td>
-      <td>4</td>
-      <td>Dairy Products</td>
-      <td>0.0</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>14</td>
-      <td>Tofu</td>
-      <td>18.6</td>
-      <td>7</td>
-      <td>Produce</td>
-      <td>0.0</td>
-      <td>9</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>51</td>
-      <td>Manjimup Dried Apples</td>
-      <td>42.4</td>
-      <td>7</td>
-      <td>Produce</td>
-      <td>0.0</td>
-      <td>40</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-
-```python
-#Revenue is calculated by subtracting discounts from the UnitPrice and multiplying by quantity ordered.
-catavs['Revenue'] = (catavs['UnitPrice'] * (1 - catavs['Discount']))*catavs['Quantity']
-```
-
-
-```python
-avcrev = catavs['Revenue'].mean()
-print (round(avcrev),2)
-cg = catavs['CategoryName'].unique()
-
-
-
-```
-
-    587.0 2
-    
-
-
-```python
-
-```
 
 ### Initial Visual Inspection and Observations:
 
@@ -515,33 +379,7 @@ The average revenue generated across all categories is `$587.00`
 
 Visually, it appears that there are three categories that significantly generate higher revenues than others, additional testing will demonstrate their siginficance and effect.
 
-
-
-```python
-fig, ax = plt.subplots(figsize=(12,8))
-sns.barplot(data=catavs, x='CategoryName', y='Revenue', ci=68, ax=ax)
-plt.title('Initial Inspection: Average Revenue Generated Accross All Categories', fontsize=18)
-plt.axhline(avcrev,linestyle="--", color='k', linewidth=.8 )
-plt.xlabel('Category')
-plt.ylabel('Revenue')
-plt.show()
-```
-
-
-![png](output_83_0.png)
-
-
-
-```python
-catcount = len(catavs['CategoryId'].unique())
-avrev = catavs['Revenue'].mean()
-print(f'There are {catcount} different categories sold in this company')
-print(f'The average revenue generated accross all categories is {round(avcrev,0)}')
-```
-
-    There are 8 different categories sold in this company
-    The average revenue generated accross all categories is 587.0
-    
+<img src='https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_83_0.png'>
 
 
 ```python
@@ -551,20 +389,6 @@ for cat in catavs['CategoryName'].unique():
 ```
 
 In each of the different categories, the products align as such: 
-
-
-```python
-catsprods = {}
-for cat in catavs['CategoryName'].unique():
-    catsprods[cat] = catavs.groupby('CategoryName').get_group(cat)['ProductId'].unique()
-```
-
-
-```python
-for k,v in catsprods.items():
-    print(f'There are {len(v)} products in the {k} Category')
-
-```
 
     There are 10 products in the Dairy Products Category
     There are 7 products in the Grains/Cereals Category
@@ -576,105 +400,9 @@ for k,v in catsprods.items():
     There are 6 products in the Meat/Poultry Category
     
 
-### Assumption 1: Outliers
-Outliers removed via z-score testing.
+### Outliers were identified and removed via z-score testing, Levene's testing revealed the data was not of equal variance so Kruksal wallance was conducted.  All sample sizes were greater than 15 so the assumption of normality was met.  
 
-
-```python
-for cat, cat_data in cats.items():
-    idx_outs = fn.find_outliers_Z(cat_data)
-    print(f'Found {idx_outs.sum()} outliers in Category # {cat}')
-    cats[cat] = cat_data[~idx_outs]
-print('\n All of these outliers were removed')
-```
-
-    Found 5 outliers in Category # Dairy Products
-    Found 6 outliers in Category # Grains/Cereals
-    Found 1 outliers in Category # Produce
-    Found 8 outliers in Category # Seafood
-    Found 4 outliers in Category # Condiments
-    Found 9 outliers in Category # Confections
-    Found 12 outliers in Category # Beverages
-    Found 4 outliers in Category # Meat/Poultry
-    
-     All of these outliers were removed
-    
-
-
-```python
-pids = catavs['ProductName'].unique()
-pids
-print(f'There are {len(pids)} products')
-```
-
-    There are 77 products
-    
-
-
-```python
-
-```
-
-### Assumption 2: Equal Variance
-
-Testing cleaned dataset for equal variance.
-
-Since the groups do NOT have euqal variance, a Kruksal test will be conducted.
-
-
-```python
-datac = []
-for k,v in cats.items():
-    datac.append(v)
-```
-
-
-```python
-import scipy.stats as stats
-stat,p = stats.levene(*datac)
-print(f'Lavene test for equal variance results are {round(p,4)}')
-sig = 'do NOT' if p < .05 else 'DO'
-
-print(f'The groups {sig} have equal variance')
-```
-
-    Lavene test for equal variance results are 0.0
-    The groups do NOT have equal variance
-    
-
-### Assumption 3: Normality
-
-All groups are > 15 samples = Assumption for normality is met.
-
-
-```python
-n = []
-
-for cat, cat_data in cats.items():
-    print(f'There are {len(cat_data)} samples in the data set for Employee #{cat}.')
-    n.append(len(cat_data)>15)
-if all(n):
-    print('\nAll samples are >15: Normality Assumption Criterion is met.')
-
-
-
-```
-
-    There are 361 samples in the data set for Employee #Dairy Products.
-    There are 190 samples in the data set for Employee #Grains/Cereals.
-    There are 135 samples in the data set for Employee #Produce.
-    There are 322 samples in the data set for Employee #Seafood.
-    There are 212 samples in the data set for Employee #Condiments.
-    There are 325 samples in the data set for Employee #Confections.
-    There are 392 samples in the data set for Employee #Beverages.
-    There are 169 samples in the data set for Employee #Meat/Poultry.
-    
-    All samples are >15: Normality Assumption Criterion is met.
-    
-
-### Kruksal Testing:
-
-Results, reject the null hypothesis.
+ Kruksal Testing yielded a p-value of 0.0 so we can reject the null hypothesis.
 
 
 ```python
