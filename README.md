@@ -82,7 +82,7 @@ Discounts were distributed as follows:
 
 ### Since we are comparing multiple discounts to inspect it's impact on quantity ordered an AVNOVA or Kruksal test will be run depending on how assumptions are met: 
    
-Assumptions for ANOVA Testing were evaluated - Outliers were evaluated using Z-Score Testing and removed. Lavines Testing was conducted on the cleaned dataset and demonstrated that it was not equal variance so Kruksal testing was conducted , and Normality.  
+Assumptions for ANOVA Testing were evaluated - Outliers were evaluated using Z-Score Testing and removed. Lavines Testing was conducted on the cleaned dataset and demonstrated that it was not equal variance so Kruksal testing was conducted.
 
 ### Assumption 1:  Outliers 
 
@@ -199,62 +199,6 @@ else:
 
 ### Post-Hoc Testing: Tukeys testing was conducted
 
-```python
-disc_df.info()
-```
-
-    <class 'pandas.core.frame.DataFrame'>
-    Int64Index: 2114 entries, 0 to 2135
-    Data columns (total 2 columns):
-    data     2114 non-null float64
-    group    2114 non-null object
-    dtypes: float64(1), object(1)
-    memory usage: 49.5+ KB
-    
-
-
-```python
-d =list(disc_df['group'].unique())
-d
-```
-
-
-    ['0.0', '0.15', '0.05', '0.2', '0.25', '0.1']
-
-
-```python
-import statsmodels.api as sms
-tukey = sms.stats.multicomp.pairwise_tukeyhsd(disc_df['data'],disc_df['group'])
-tukey.summary()
-
-
-There is a statistically significant effect on quantity purchased based on discount. The discounts below are statistically considered equal:
-
-
-
-
-```python
-disc_tukey = fn.tukey_df(tukey)
-disc_tukey_trues = disc_tukey.loc[disc_tukey['reject']==True]
-disc_tukey_trues
-```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
 </style>
 <table border="1" class="dataframe">
   <thead>
@@ -318,84 +262,6 @@ disc_tukey_trues
 
 
 
-
-
-```python
-disc_df['group']=disc_df['group'].astype(str)
-d=disc_df['group']
-```
-
-
-```python
-
-@interact
-def plt_discounts(d=d):
-    sns.distplot(disc_df.groupby('group').get_group(d)['data'])
-    plt.axvline(qty_mu, color='purple')
-    
-```
-
-
-    interactive(children=(Dropdown(description='d', options=('0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '0.0…
-
-
-
-```python
-stats = disc_df['data'].describe()
-dataqty = stats['mean']
-print(f'Revised average quantity sold across all orders {round(dataqty)}')
-zeros = disc_df.groupby('group').get_group('0.0')['data']
-nodiscav = zeros.mean()
-print(f'Average quantity sold for orders where no discount was extended was: {round(nodiscav)}')
-```
-
-    Revised average quantity sold across all orders 23.0
-    Average quantity sold for orders where no discount was extended was: 21.0
-    
-
-
-```python
-for k,v in discs.items():
-    print(f'The average quantity sold for {k} discount is {round(v.mean())}')
-```
-
-    The average quantity sold for 0.0 discount is 21.0
-    The average quantity sold for 0.15 discount is 27.0
-    The average quantity sold for 0.05 discount is 27.0
-    The average quantity sold for 0.2 discount is 26.0
-    The average quantity sold for 0.25 discount is 27.0
-    The average quantity sold for 0.1 discount is 24.0
-    
-
-
-```python
-data_mu = disc_df['data'].mean()
-print(f'The average qty purchased regardless of discount or none offered is {round(data_mu)}')
-```
-
-    The average qty purchased regardless of discount or none offered is 23.0
-    
-
-### Various EDA to understand distributions and remaining potential outliers
-
-The following hex-bin visualization illustrates the density of data in the 0% category. Visually, this appears that equal quantitites are purchased, but might be due to light markings relative to sample sizes.  Clearly not the best choice for EDA, and further exploration is required.
-
-
-```python
-disc_df['group'] = disc_df['group'].astype(float)
-sns.jointplot(data=disc_df, x='group', y='data', kind='hex')
-plt.ylabel('Qty')
-```
-
-
-
-
-    Text(336.9714285714286, 0.5, 'Qty')
-
-
-
-
-![png](output_66_1.png)
 
 
 Visual on distributions and potential remaining outliers:
