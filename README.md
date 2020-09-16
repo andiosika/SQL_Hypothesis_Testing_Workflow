@@ -59,21 +59,11 @@ From this dataset of 2155 line items that span 830 orders, the average quantity 
 Discounts were distributed as follows:
 
     0.00    1317
-    0.01       1
-    0.02       2
-    0.03       3
-    0.04       1
     0.05     185
-    0.06       1
     0.10     173
     0.15     157
     0.20     161
     0.25     154
-
-
-
-**The sample sizes associated with discounts .01, .02, .03, .04 and .06 are relatively nominal <4, and will be dropped as without a normal or comperable dataset to evaulate their impact in comparison with the other groups.**
-
  
  # Distributions appear roughly equal across all discount levels:
 
@@ -82,86 +72,8 @@ Discounts were distributed as follows:
 
 ### Since we are comparing multiple discounts to inspect it's impact on quantity ordered an AVNOVA or Kruksal test will be run depending on how assumptions are met: 
    
-Assumptions for ANOVA Testing were evaluated - Outliers were evaluated using Z-Score Testing and removed. Lavines Testing was conducted on the cleaned dataset and demonstrated that it was not equal variance so Kruksal testing was conducted.
+Assumptions for ANOVA Testing were evaluated - Outliers were evaluated using Z-Score Testing and removed. Lavines Testing was conducted on the cleaned dataset and demonstrated that it was not equal variance so Kruksal testing was conducted.  All sample sizes were greater than 15 so the assumption of normality was met.  
 
-### Assumption 1:  Outliers 
-
-Evaluation and removal via Z-Score testing:
-
-
-```python
-for disc, disc_data in discs.items():
-    idx_outs = fn.find_outliers_Z(disc_data)
-    print(f'Found {idx_outs.sum()} outliers in Discount Group {disc}')
-    discs[disc] = disc_data[~idx_outs]
-print('\n All of these outliers were removed')
-```
-
-    Found 20 outliers in Discount Group 0.0
-    Found 2 outliers in Discount Group 0.15
-    Found 3 outliers in Discount Group 0.05
-    Found 2 outliers in Discount Group 0.2
-    Found 3 outliers in Discount Group 0.25
-    Found 3 outliers in Discount Group 0.1
-    
-     All of these outliers were removed
-    
-
-### Assumption 2: Equal Variance
-
-Levines testing conducted on cleaned dataset
-
-
-```python
-#preparing data for levene's testing
-datad = []
-for k,v in discs.items():
-    datad.append(v)
-```
-
-```python
-import scipy.stats as stats
-stat,p = stats.levene(discs[0.0],discs[0.05],discs[0.1],discs[0.25], discs[0.15], discs[0.20])
-print(f'Lavene test for equal variance results are {round(p,4)}')
-sig = 'do NOT' if p < .05 else 'DO'
-
-print(f'The groups {sig} have equal variance')
-
-```
-
-    Lavene test for equal variance results are 0.0003
-    The groups do NOT have equal variance
-    
-
-#### Since group does not prove to be equal variance, a **kruksal** will be conducted.
-Looking at sample sizes to determine if normality needs to be tested.
-
-### Assumption 3: Normality
-
-First, checking sample sizes since assumption for normality depends on sample size. If 2-9 groups, each group n >= 15
-
-For Discounts of 5%, 10%, 15%, 20% and 25% n>15 
-
-
-```python
-n = []
-for disc, disc_data in discs.items():
-    print(f'There are {len(disc_data)} samples in the {disc} discount group.')    
-    n.append(len(disc_data)>15)
-if all(n):
-    print('\nAll samples are >15: Normality Assumption Criterion is met.')
-
-```
-
-    There are 1297 samples in the 0.0 discount group.
-    There are 155 samples in the 0.15 discount group.
-    There are 182 samples in the 0.05 discount group.
-    There are 159 samples in the 0.2 discount group.
-    There are 151 samples in the 0.25 discount group.
-    There are 170 samples in the 0.1 discount group.
-    
-    All samples are >15: Normality Assumption Criterion is met.
-    
 
 ## Kruksal Testing:
 
@@ -259,13 +171,7 @@ else:
 </div>
 
 
-
-
-
-
-
-Visual on distributions and potential remaining outliers:
-
+Visual on distributions and potential remaining outliers to get a cleaner view:
 
 ```python
 #boxen plot
@@ -275,9 +181,7 @@ plt.gca()
 plt.show()
 ```
 
-
 <img src="https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_68_0.png">
-
 
 This plot may not best suit non-technical audience with the additional information potentially could cause confusion.  However, the above boxen plot clearly illustrates distributions as well as remaining potential outliers in the .05, .15, .2 and .25 groups.  These outliers will not be removed at the present moment with the intention to preserve as much of the initial dataset as possible.  Sample sizes can be referenced under 'Assumption 3: Normality' where this is observed.
 
@@ -292,12 +196,7 @@ plt.xlabel('Discount Extended')
 plt.ylabel('Average Quantity Purchased')
 ```
 
-
-
-
     Text(0, 0.5, 'Average Quantity Purchased')
-
-
 
 
 <img src="https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_70_1.png">
@@ -347,7 +246,6 @@ Additional notes:
 For discounts 1%,2%,3%,4%, and 6% that were included in the original dataset, the amount of data provided was relatively small to evaluate the impact on the whole. This data was removed from further testing
 
 With additional outliers removed for each of the discount groups, the revised average qty purchased was 23 overall.
-
 
  
 ###  Recommendation:
