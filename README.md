@@ -39,204 +39,6 @@ ___
 
 
 
-
-# List of Tables:
-
-
-```python
-cur.execute("""SELECT name FROM sqlite_master WHERE type='table';""")
-df_tables = pd.DataFrame(cur.fetchall(), columns=['Table'])
-df_tables
-```
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Table</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>0</td>
-      <td>Employee</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>Category</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Customer</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>Shipper</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>Supplier</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>Order</td>
-    </tr>
-    <tr>
-      <td>6</td>
-      <td>Product</td>
-    </tr>
-    <tr>
-      <td>7</td>
-      <td>OrderDetail</td>
-    </tr>
-    <tr>
-      <td>8</td>
-      <td>CustomerCustomerDemo</td>
-    </tr>
-    <tr>
-      <td>9</td>
-      <td>CustomerDemographic</td>
-    </tr>
-    <tr>
-      <td>10</td>
-      <td>Region</td>
-    </tr>
-    <tr>
-      <td>11</td>
-      <td>Territory</td>
-    </tr>
-    <tr>
-      <td>12</td>
-      <td>EmployeeTerritory</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-
-```python
-cur.execute("""SELECT * FROM `Order`;""")
-df = pd.DataFrame(cur.fetchall(), columns=[x[0] for x in cur.description])
-df.head()
-
-```
-### A look at the Orders Table:
-
-
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Id</th>
-      <th>CustomerId</th>
-      <th>EmployeeId</th>
-      <th>OrderDate</th>
-      <th>RequiredDate</th>
-      <th>ShippedDate</th>
-      <th>ShipVia</th>
-      <th>Freight</th>
-      <th>ShipName</th>
-      <th>ShipAddress</th>
-      <th>ShipCity</th>
-      <th>ShipRegion</th>
-      <th>ShipPostalCode</th>
-      <th>ShipCountry</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>0</td>
-      <td>10248</td>
-      <td>VINET</td>
-      <td>5</td>
-      <td>2012-07-04</td>
-      <td>2012-08-01</td>
-      <td>2012-07-16</td>
-      <td>3</td>
-      <td>32.38</td>
-      <td>Vins et alcools Chevalier</td>
-      <td>59 rue de l'Abbaye</td>
-      <td>Reims</td>
-      <td>Western Europe</td>
-      <td>51100</td>
-      <td>France</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>10249</td>
-      <td>TOMSP</td>
-      <td>6</td>
-      <td>2012-07-05</td>
-      <td>2012-08-16</td>
-      <td>2012-07-10</td>
-      <td>1</td>
-      <td>11.61</td>
-      <td>Toms Spezialitäten</td>
-      <td>Luisenstr. 48</td>
-      <td>Münster</td>
-      <td>Western Europe</td>
-      <td>44087</td>
-      <td>Germany</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>10250</td>
-      <td>HANAR</td>
-      <td>4</td>
-      <td>2012-07-08</td>
-      <td>2012-08-05</td>
-      <td>2012-07-12</td>
-      <td>2</td>
-      <td>65.83</td>
-      <td>Hanari Carnes</td>
-      <td>Rua do Paço, 67</td>
-      <td>Rio de Janeiro</td>
-      <td>South America</td>
-      <td>05454-876</td>
-      <td>Brazil</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>10251</td>
-      <td>VICTE</td>
-      <td>3</td>
-      <td>2012-07-08</td>
-      <td>2012-08-05</td>
-      <td>2012-07-15</td>
-      <td>1</td>
-      <td>41.34</td>
-      <td>Victuailles en stock</td>
-      <td>2, rue du Commerce</td>
-      <td>Lyon</td>
-      <td>Western Europe</td>
-      <td>69004</td>
-      <td>France</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>10252</td>
-      <td>SUPRD</td>
-      <td>4</td>
-      <td>2012-07-09</td>
-      <td>2012-08-06</td>
-      <td>2012-07-11</td>
-      <td>2</td>
-      <td>51.30</td>
-      <td>Suprêmes délices</td>
-      <td>Boulevard Tirou, 255</td>
-      <td>Charleroi</td>
-      <td>Western Europe</td>
-      <td>B-6000</td>
-      <td>Belgium</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
 # HYPOTHESIS 1
 
 > ***Does discount amount have a statistically significant effect on the quantity of a product in an order? If so, at what level(s) of discount?***
@@ -245,151 +47,14 @@ df.head()
 - $H_1$:Discounts have a statistically significant effect on the quantiy of a product in an order.
 - $H_1a$:Certain discount values have a greater effect than others.
 
-## Importing and inspecting data from OrderDetail table:
 
-This table from the Northwind database includes order information on:
-
-    1) Quantity
-    2) Discount 
-
-Once imported, the data will be grouped by discount level and the means of the quantity sold for each will be compared against each other to evaluate if they are statistically significantly different.  This will determine if the null hypothesis can be rejected with a probability of 5% error in reporting a false negative.
+To begin, in taking a look at the **OrderDetail table**, it was apparent I'd have the data I'd need - simply quantity and discount.  
+Once imported, the data was grouped by discount level and the means of the quantity sold for each were compared against each other to evaluate if they were statistically significantly different.  This will determine if the null hypothesis can be rejected with a probability of 5% error in reporting a false negative.
 
 
-```python
-cur.execute("""SELECT * FROM OrderDetail;""")
-df = pd.DataFrame(cur.fetchall(), columns=[x[0] for x in cur.description])
-```
+### Some initial information was gathered:
 
-
-
-```python
-#explorting dataset
-specs = df.describe()
-specs
-```
-
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>OrderId</th>
-      <th>ProductId</th>
-      <th>UnitPrice</th>
-      <th>Quantity</th>
-      <th>Discount</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>count</td>
-      <td>2155.000000</td>
-      <td>2155.000000</td>
-      <td>2155.000000</td>
-      <td>2155.000000</td>
-      <td>2155.000000</td>
-    </tr>
-    <tr>
-      <td>mean</td>
-      <td>10659.375870</td>
-      <td>40.793039</td>
-      <td>26.218520</td>
-      <td>23.812993</td>
-      <td>0.056167</td>
-    </tr>
-    <tr>
-      <td>std</td>
-      <td>241.378032</td>
-      <td>22.159019</td>
-      <td>29.827418</td>
-      <td>19.022047</td>
-      <td>0.083450</td>
-    </tr>
-    <tr>
-      <td>min</td>
-      <td>10248.000000</td>
-      <td>1.000000</td>
-      <td>2.000000</td>
-      <td>1.000000</td>
-      <td>0.000000</td>
-    </tr>
-    <tr>
-      <td>25%</td>
-      <td>10451.000000</td>
-      <td>22.000000</td>
-      <td>12.000000</td>
-      <td>10.000000</td>
-      <td>0.000000</td>
-    </tr>
-    <tr>
-      <td>50%</td>
-      <td>10657.000000</td>
-      <td>41.000000</td>
-      <td>18.400000</td>
-      <td>20.000000</td>
-      <td>0.000000</td>
-    </tr>
-    <tr>
-      <td>75%</td>
-      <td>10862.500000</td>
-      <td>60.000000</td>
-      <td>32.000000</td>
-      <td>30.000000</td>
-      <td>0.100000</td>
-    </tr>
-    <tr>
-      <td>max</td>
-      <td>11077.000000</td>
-      <td>77.000000</td>
-      <td>263.500000</td>
-      <td>130.000000</td>
-      <td>0.250000</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-General Observation: Pricing ranges from `$2` - `$263` with an average price of `$26.21` and average qty of 23 items ordered, no null values
-
-
-```python
-df.info()
-```
-
-    <class 'pandas.core.frame.DataFrame'>
-    RangeIndex: 2155 entries, 0 to 2154
-    Data columns (total 6 columns):
-    Id           2155 non-null object
-    OrderId      2155 non-null int64
-    ProductId    2155 non-null int64
-    UnitPrice    2155 non-null float64
-    Quantity     2155 non-null int64
-    Discount     2155 non-null float64
-    dtypes: float64(2), int64(3), object(1)
-    memory usage: 101.1+ KB
-    
-
-
-```python
-len(df['OrderId'].unique())
-```
-
-
-
-
-    830
-
-
-
-
-```python
-
-```
-
-### Initial Visual Inspection:
-
-From this dataset of 2155 line items that span 830 orders, the average quantity ordered is 24 regardless of discount, the minimum ordered is 0 and max ordered is 130, although the IQR is between 10 and 30.
+From this dataset of 2155 line items that span 830 orders, the average quantity ordered is 24 regardless of discount, the minimum ordered is 0 and max ordered is 130, although the IQR is between 10 and 30.  Pricing ranges from `$2` - `$263` with an average price of `$26.21` 
 
 
 ```python
@@ -397,22 +62,6 @@ qty = df['Quantity']
 qty_specs = qty.describe()
 qty_specs
 ```
-
-
-
-
-    count    2155.000000
-    mean       23.812993
-    std        19.022047
-    min         1.000000
-    25%        10.000000
-    50%        20.000000
-    75%        30.000000
-    max       130.000000
-    Name: Quantity, dtype: float64
-
-
-
 
 ```python
 qty_mu = round(qty_specs['mean'],0)
@@ -425,14 +74,11 @@ print(f'There are {n} orders in this sample.')
     There are 2155 orders in this sample.
     
 
-
 ```python
 d =list(df['Discount'].unique())
 d
 #Dscounts are as follows:
 ```
-
-
 
 
     [0.0, 0.15, 0.05, 0.2, 0.25, 0.1, 0.02, 0.03, 0.04, 0.06, 0.01]
@@ -463,79 +109,16 @@ display(dfa)
 **The sample sizes associated with discounts .01, .02, .03, .04 and .06 are relatively nominal <4, and will be dropped as without a normal or comperable dataset to evaulate their impact in comparison with the other groups.**
 
 
-```python
-discs = {}
-for disc in df['Discount'].unique():
-    discs[disc] = df.groupby('Discount').get_group(disc)['Quantity']
-```
-
-
-```python
-for k,v in discs.items():
-    print(k)
-```
-
-    0.0
-    0.15
-    0.05
-    0.2
-    0.25
-    0.1
-    0.02
-    0.03
-    0.04
-    0.06
-    0.01
-    
-
-
-```python
-l=[.01,.02,.03,.04,.06]
-oneper = discs.pop(.01)
-twoper = discs.pop(.02)
-threeper = discs.pop(.03)
-fourper = discs.pop(.04)
-sixper = discs.pop(.06)
-```
-
-
-```python
-#visualizing distributions
-fig, ax = plt.subplots(figsize=(10,5))
-for k,v in discs.items():
-    sns.distplot(v,label=v)
-
-plt.title('Quantity Distribution')
-plt.legend()
-print('Distributions appear roughly equal,')
-```
  
  # Distributions appear roughly equal across all discount levels:
 
 <img src="https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_37_1.png">
 
-## Initial Observations:
 
-The average quantity ordered from this sample is : 24.0
-There are 2155 orders in this sample. 
-
-Discounts are as follows:
-0.0, 0.15, 0.05, 0.2, 0.25, 0.1, 0.02, 0.03, 0.04, 0.06, 0.01
-
-The majority of product purchases are without the discount(1317/2155) 61%, and frequency of discounts are as follows:
-5%
-10%
-20%
-15%
-25%
-
-For discounts 1%,2%,3%,4%, and 6% , the amount of data provided was relatively small to evaluate the impact on the whole.  This data was removed from further testing.
-
-Overall distributions appears relatively uniform. 
+The majority of product purchases are without the discount(1317/2155) 61%
 
 ### Since we are comparing multiple discounts to inspect it's impact on quantity ordered an AVNOVA or Kruksal test will be run depending on how assumptions are met: 
    
-    
 Assumptions for ANOVA Testing: 
 (see corresponding sections
 
@@ -659,9 +242,6 @@ else:
 disc_df = fn.prep_data_for_tukeys(discs)
 disc_df
 ```
-
-
-
 
 
 </style>
