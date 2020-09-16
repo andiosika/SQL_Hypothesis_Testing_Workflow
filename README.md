@@ -56,42 +56,8 @@ Once imported, the data was grouped by discount level and the means of the quant
 
 From this dataset of 2155 line items that span 830 orders, the average quantity ordered is 24 regardless of discount, the minimum ordered is 0 and max ordered is 130, although the IQR is between 10 and 30.  Pricing ranges from `$2` - `$263` with an average price of `$26.21` 
 
+Discounts were distributed as follows:
 
-```python
-qty = df['Quantity']
-qty_specs = qty.describe()
-qty_specs
-```
-
-```python
-qty_mu = round(qty_specs['mean'],0)
-n = len(df)
-print(f'The average quantity ordered from this sample is : {qty_mu}')
-print(f'There are {n} orders in this sample.')
-```
-
-    The average quantity ordered from this sample is : 24.0
-    There are 2155 orders in this sample.
-    
-
-```python
-d =list(df['Discount'].unique())
-d
-#Dscounts are as follows:
-```
-
-
-    [0.0, 0.15, 0.05, 0.2, 0.25, 0.1, 0.02, 0.03, 0.04, 0.06, 0.01]
-
-
-```python
-dfa = df.groupby('Discount').count()['Quantity']
-display(dfa)
-
-```
-
-
-    Discount
     0.00    1317
     0.01       1
     0.02       2
@@ -103,11 +69,10 @@ display(dfa)
     0.15     157
     0.20     161
     0.25     154
-    Name: Quantity, dtype: int64
+
 
 
 **The sample sizes associated with discounts .01, .02, .03, .04 and .06 are relatively nominal <4, and will be dropped as without a normal or comperable dataset to evaulate their impact in comparison with the other groups.**
-
 
  
  # Distributions appear roughly equal across all discount levels:
@@ -115,12 +80,9 @@ display(dfa)
 <img src="https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_37_1.png">
 
 
-The majority of product purchases are without the discount(1317/2155) 61%
-
 ### Since we are comparing multiple discounts to inspect it's impact on quantity ordered an AVNOVA or Kruksal test will be run depending on how assumptions are met: 
    
-Assumptions for ANOVA Testing: 
-(see corresponding sections
+Assumptions for ANOVA Testing were evaluated - Outliers were evaluated using Z-Score Testing and removed. Lavines Testing was conducted on the cleaned dataset and demonstrated that it was not equal variance so Kruksal testing was conducted , and Normality.  
 
 ### Assumption 1:  Outliers 
 
@@ -235,87 +197,7 @@ else:
     Reject the null hypothesis
     
 
-### Post-Hoc Testing: 
-
-
-```python
-disc_df = fn.prep_data_for_tukeys(discs)
-disc_df
-```
-
-
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>data</th>
-      <th>group</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>0</td>
-      <td>12.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>10.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>5.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>9.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>40.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <td>2095</td>
-      <td>30.0</td>
-      <td>0.1</td>
-    </tr>
-    <tr>
-      <td>2096</td>
-      <td>77.0</td>
-      <td>0.1</td>
-    </tr>
-    <tr>
-      <td>2098</td>
-      <td>25.0</td>
-      <td>0.1</td>
-    </tr>
-    <tr>
-      <td>2099</td>
-      <td>4.0</td>
-      <td>0.1</td>
-    </tr>
-    <tr>
-      <td>2135</td>
-      <td>2.0</td>
-      <td>0.1</td>
-    </tr>
-  </tbody>
-</table>
-<p>2114 rows × 2 columns</p>
-</div>
-
-
-
+### Post-Hoc Testing: Tukeys testing was conducted
 
 ```python
 disc_df.info()
@@ -337,76 +219,13 @@ d
 ```
 
 
-
-
     ['0.0', '0.15', '0.05', '0.2', '0.25', '0.1']
-
-
 
 
 ```python
 import statsmodels.api as sms
 tukey = sms.stats.multicomp.pairwise_tukeyhsd(disc_df['data'],disc_df['group'])
 tukey.summary()
-
-
-```
-
-
-
-
-<table class="simpletable">
-<caption>Multiple Comparison of Means - Tukey HSD, FWER=0.05</caption>
-<tr>
-  <th>group1</th> <th>group2</th> <th>meandiff</th>  <th>p-adj</th>  <th>lower</th>   <th>upper</th>  <th>reject</th>
-</tr>
-<tr>
-    <td>0.0</td>   <td>0.05</td>   <td>6.0639</td>   <td>0.001</td> <td>2.4368</td>   <td>9.691</td>   <td>True</td> 
-</tr>
-<tr>
-    <td>0.0</td>    <td>0.1</td>   <td>2.9654</td>  <td>0.2098</td> <td>-0.7723</td> <td>6.7031</td>   <td>False</td>
-</tr>
-<tr>
-    <td>0.0</td>   <td>0.15</td>   <td>6.9176</td>   <td>0.001</td> <td>3.0233</td>  <td>10.8119</td>  <td>True</td> 
-</tr>
-<tr>
-    <td>0.0</td>    <td>0.2</td>   <td>5.6293</td>   <td>0.001</td> <td>1.7791</td>  <td>9.4796</td>   <td>True</td> 
-</tr>
-<tr>
-    <td>0.0</td>   <td>0.25</td>   <td>6.1416</td>   <td>0.001</td> <td>2.2016</td>  <td>10.0817</td>  <td>True</td> 
-</tr>
-<tr>
-   <td>0.05</td>    <td>0.1</td>   <td>-3.0985</td> <td>0.4621</td> <td>-7.9861</td>  <td>1.789</td>   <td>False</td>
-</tr>
-<tr>
-   <td>0.05</td>   <td>0.15</td>   <td>0.8537</td>    <td>0.9</td>  <td>-4.1547</td>  <td>5.862</td>   <td>False</td>
-</tr>
-<tr>
-   <td>0.05</td>    <td>0.2</td>   <td>-0.4346</td>   <td>0.9</td>  <td>-5.4088</td> <td>4.5396</td>   <td>False</td>
-</tr>
-<tr>
-   <td>0.05</td>   <td>0.25</td>   <td>0.0777</td>    <td>0.9</td>  <td>-4.9663</td> <td>5.1218</td>   <td>False</td>
-</tr>
-<tr>
-    <td>0.1</td>   <td>0.15</td>   <td>3.9522</td>  <td>0.2311</td> <td>-1.1368</td> <td>9.0412</td>   <td>False</td>
-</tr>
-<tr>
-    <td>0.1</td>    <td>0.2</td>   <td>2.6639</td>  <td>0.6409</td> <td>-2.3915</td> <td>7.7193</td>   <td>False</td>
-</tr>
-<tr>
-    <td>0.1</td>   <td>0.25</td>   <td>3.1762</td>  <td>0.4872</td> <td>-1.9479</td> <td>8.3004</td>   <td>False</td>
-</tr>
-<tr>
-   <td>0.15</td>    <td>0.2</td>   <td>-1.2883</td>   <td>0.9</td>  <td>-6.4605</td>  <td>3.884</td>   <td>False</td>
-</tr>
-<tr>
-   <td>0.15</td>   <td>0.25</td>   <td>-0.7759</td>   <td>0.9</td>  <td>-6.0154</td> <td>4.4635</td>   <td>False</td>
-</tr>
-<tr>
-    <td>0.2</td>   <td>0.25</td>   <td>0.5123</td>    <td>0.9</td>  <td>-4.6945</td> <td>5.7191</td>   <td>False</td>
-</tr>
-</table>
-
 
 
 There is a statistically significant effect on quantity purchased based on discount. The discounts below are statistically considered equal:
