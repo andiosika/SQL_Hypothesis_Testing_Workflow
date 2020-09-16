@@ -438,45 +438,6 @@ d
     [0.0, 0.15, 0.05, 0.2, 0.25, 0.1, 0.02, 0.03, 0.04, 0.06, 0.01]
 
 
-
-
-```python
-import matplotlib.pyplot as plt
-import seaborn as sns
-sns.distplot(qty)
-plt.axvline(qty_mu, label='Qty Mean', color='purple')
-plt.show()
-
-```
-
-
-    <Figure size 640x480 with 1 Axes>
-
-
-
-
-
-
-```python
-import seaborn as sns
-from ipywidgets import interact
-```
-
-
-```python
-
-@interact
-def plt_discounts(d=d):
-    sns.distplot(df.groupby('Discount').get_group(d)['Quantity'])
-    plt.axvline(qty_mu, color='purple')
-    
-```
-
-
-    interactive(children=(Dropdown(description='d', options=(0.0, 0.15, 0.05, 0.2, 0.25, 0.1, 0.02, 0.03, 0.04, 0.…
-
-
-
 ```python
 dfa = df.groupby('Discount').count()['Quantity']
 display(dfa)
