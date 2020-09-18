@@ -29,7 +29,7 @@ A two year sales history was examined in a series of tables stored in a database
      
 > 3) ***Do certain sales representatives sell more than others?  Who are the top sellers?***
 
-> 4) ***Where are our customers from that spend the most money?***
+> 4) ***Where are the customers from that spend the most money?***
 
 
 ___
@@ -64,11 +64,6 @@ Discounts were distributed as follows:
     0.15     157
     0.20     161
     0.25     154
- 
- # Distributions appear roughly equal across all discount levels:
-
-<img src="https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_37_1.png" width=220>
-
 
 ### Since we are comparing multiple discounts to inspect it's impact on quantity ordered an AVNOVA or Kruksal test will be run depending on how assumptions are met: 
    
