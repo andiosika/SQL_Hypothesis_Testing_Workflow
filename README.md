@@ -47,12 +47,12 @@ ___
 - $H_1a$:Certain discount values have a greater effect than others.
 
 
-To begin, in taking a look at the **OrderDetail table**, it was apparent I'd have the data I'd need - simply quantity and discount.  
+To begin, in taking a look at the **OrderDetail table**, the data required was made available: quantity and discount.  
 Once imported, the data was grouped by discount level and the means of the quantity sold for each were compared against each other to evaluate if they were statistically significantly different.  The results can suggest if the null hypothesis can be rejected with a probability of 5% error in reporting a false negative.
 
 ### Some initial information was gathered:
 
-From this dataset of 2155 line items that span 830 orders, the average quantity ordered is 24 regardless of discount, the minimum ordered is 0 and max ordered is 130, although the IQR is between 10 and 30.  Pricing ranges from `$2` - `$263` with an average price of `$26.21` 
+From this dataset of 2155 line items that span 830 orders, it was discovered the average quantity ordered is 24 regardless of discount, the minimum ordered is 0 and max ordered is 130, although the IQR is between 10 and 30.  Pricing ranges from `$2` - `$263` with an average price of `$26.21` 
 
 Discounts were distributed as follows:
 
@@ -143,21 +143,6 @@ plt.show()
 <img src="https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_68_0.png">
 
 This plot may not best suit non-technical audience with the additional information potentially could cause confusion.  However, the above boxen plot clearly illustrates distributions as well as remaining potential outliers in the .05, .15, .2 and .25 groups.  These outliers will not be removed at the present moment with the intention to preserve as much of the initial dataset as possible.  
-
-Effect Sizes: 
-
-```python
-for disc, disc_data in discs.items():
-    es = fn.Cohen_d(zeros, disc_data)
-    print(f'The effect size for {disc} is {round(np.abs(es),4)}')
-```
-
-    The effect size for 0.0 is 0.0
-    The effect size for 0.15 is 0.453
-    The effect size for 0.05 is 0.3949
-    The effect size for 0.2 is 0.3751
-    The effect size for 0.25 is 0.4109
-    The effect size for 0.1 is 0.1982
     
 
 ## Hypothesis 1 Findings and Recommendation:
@@ -173,7 +158,7 @@ for disc, disc_data in discs.items():
 
 A 10% discount had no statistical significance on the quantiy purchased.
 
-Discounts extended at 5%, 15%, 20%, and 25% statistically are equal in terms of their effect on quantity sold when compared to none offered, with a p-value of .001 meaning there is a .01 percent chance of classifying them as such due to chance. Each have varying effect sizes in compared to orders placed with no discount extended.
+Discounts extended at 5%, 15%, 20%, and 25% statistically are equal on quantity sold when compared to none offered, with a p-value of .001 meaning there is a .01 percent chance of classifying them as such due to chance. Each have varying effect sizes in compared to orders placed with no discount extended.
  
 Discount |AvQty | Effect Size | Effect
  -- | -- | -- | --|
