@@ -67,16 +67,15 @@ Discounts were distributed as follows:
  
  # Distributions appear roughly equal across all discount levels:
 
-<img src="https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_37_1.png" size=40%>
+<img src="https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_37_1.png" width=220>
 
 
 ### Since we are comparing multiple discounts to inspect it's impact on quantity ordered an AVNOVA or Kruksal test will be run depending on how assumptions are met: 
    
-Assumptions for ANOVA Testing were evaluated - Outliers were evaluated using Z-Score Testing and removed. Lavines Testing was conducted on the cleaned dataset and demonstrated that it was not equal variance so Kruksal testing was conducted.  All sample sizes were greater than 15 so the assumption of normality was met.  
+Assumptions for ANOVA Testing were evaluated - Outliers were evaluated using Z-Score Testing and removed. Lavines Testing was conducted on the cleaned dataset and demonstrated that it was not equal variance so Kruksal Wallace testing was conducted.  All sample sizes were greater than 15 so the assumption of normality was met.  
 
 
 ## Kruksal Testing:
-
 
 ```python
 stat, p = stats.kruskal(discs[0.0],discs[0.05],discs[0.1],discs[0.25], discs[0.15], discs[0.20])
@@ -90,10 +89,8 @@ else:
 
     Kruskal test p value: 0.0
     Reject the null hypothesis
-    
 
 #### ANOVA Testing for comparison
-
 
 ```python
 stat, p = stats.f_oneway(*datad)
@@ -186,21 +183,8 @@ plt.show()
 This plot may not best suit non-technical audience with the additional information potentially could cause confusion.  However, the above boxen plot clearly illustrates distributions as well as remaining potential outliers in the .05, .15, .2 and .25 groups.  These outliers will not be removed at the present moment with the intention to preserve as much of the initial dataset as possible.  Sample sizes can be referenced under 'Assumption 3: Normality' where this is observed.
 
 
-```python
-fig, ax = plt.subplots(figsize=(10,8))
-sns.barplot(data=disc_df, x='group', y='data', ci=68)
-#plt.axhline(data_mu, linestyle='--', color='darkgray')
-plt.axhline(26.75, linestyle='--', color='lightblue')
-plt.title('Average Quanity Purchased at Varying Discont Levels', fontsize=20)
-plt.xlabel('Discount Extended')
-plt.ylabel('Average Quantity Purchased')
-```
-
-    Text(0, 0.5, 'Average Quantity Purchased')
-
-
-<img src="https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_70_1.png" size= 40%>
-
+Something like this might make more sense: 
+<img src="https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_70_1.png" width=400>
 
 Effect Sizes: 
 
@@ -252,14 +236,11 @@ With additional outliers removed for each of the discount groups, the revised av
 
 While larger discounts did deomonstrate significant effect on quantity purchased, smaller discounts held a statistically equal effect.  **To recognize the effect of driving higher quantities purchased and realize larger profit margins, offer the smaller discount(s).**
 
-
+____
 # HYPOTHESIS 2:
 
 > ***Do some categories generate more revenue than others ??*** 
   **Which ones?**
- 
- 
-
 
 - $𝐻0$ : All categories generate equal revenues.
 - $𝐻1$ : Certain categories sell at statistically higher rates of revneu than others.
@@ -268,22 +249,19 @@ While larger discounts did deomonstrate significant effect on quantity purchased
 For this round of testing the Product and OrderDetail tables were queried using SQL.  These tables includes product information data including: categories, pricing, and discount information to generate revenues.
 
 
-
-### Initial Visual Inspection and Observations:
+### Background Observations after Initial Inspection:
 
 There are 8 different categories sold in this company that represent 77 products, and the average revenue generated across all categories is `$587.00`
 
 Visually, it appears that there are three categories that significantly generate higher revenues than others, additional testing will demonstrate their siginficance and effect.
 
-<img src='https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_83_0.png' size=30% >
-
+<img src='https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_83_0.png' width=400>
 
 ```python
 cats = {}
 for cat in catavs['CategoryName'].unique():
     cats[cat] = catavs.groupby('CategoryName').get_group(cat)['Revenue']
 ```
-
 In each of the different categories, the products align as such: 
 
     There are 10 products in the Dairy Products Category
@@ -294,12 +272,10 @@ In each of the different categories, the products align as such:
     There are 13 products in the Confections Category
     There are 12 products in the Beverages Category
     There are 6 products in the Meat/Poultry Category
-    
 
-### Outliers were identified and removed via z-score testing, Levene's testing revealed the data was not of equal variance so Kruksal wallance was conducted.  All sample sizes were greater than 15 so the assumption of normality was met.  
+### Outliers were identified and removed via z-score testing, Levene's testing revealed the data was not of equal variance so Kruksal Wallance was conducted.  All sample sizes were greater than 15 so the assumption of normality was met.  
 
  Kruksal Testing yielded a p-value of 0.0 so we can reject the null hypothesis.
-
 
 ```python
 stat, p = stats.kruskal(*datac)
@@ -312,11 +288,6 @@ else:
 
     Kruskal test p value: 0.0
     Reject the null hypothesis
-    
-
-### Post-Hoc Testing: This got complicated since we are comparing many to many.
-
-
 
 #### Visual Inspection Post Data Cleaning:
 
@@ -331,16 +302,8 @@ else:
     The average revenue for Meat/Poultry is $810.81
     
 
-### Hypothesis 2: A Clean Vizualization
-
-
-<img src='https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_109_1.png' size=40%>
-
-another look:
-
-<img src="https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_110_1.png" size=30%>
-
-The comarison becomes complicated as each group needs to be compared against the other.  This was solved by creating a dataframe that compared group 1 (g1) to group 2 (g2) and results of [Tukey Testing](https://en.wikipedia.org/wiki/Tukey%27s_range_test) to determine if there was significant difference were collected. Subsequently Cohen's D was determined for each pair comparisson. 
+### Post-Hoc Testing: This got complicated since we are comparing each product to every other product individually.
+The comarison becomes complicated as each product needs to be compared against the other.  This was solved by creating a dataframe that compared group 1 (g1) to group 2 (g2) and results of [Tukey Testing](https://en.wikipedia.org/wiki/Tukey%27s_range_test) to determine if there was significant difference were collected. Subsequently Cohen's D was determined for each pair comparisson to examine effect size.
 
 ```python
 def mult_Cohn_d(tukey_result_df, df_dict):
@@ -362,8 +325,7 @@ def mult_Cohn_d(tukey_result_df, df_dict):
     return mdc
 ```
 
-The table below illustrates those categories that can reject the null hypothesis that states all categories generate equal revenue.  The padj reflects probability and the d column shows the effect size. 
-
+The table below illustrates those categories that can reject the null hypothesis that states all categories generate equal revenue.  The padj reflects probability and the d column illustrates the effect size. 
 
 ```python
 mult_Cohn_d(tukeyctrues, cats)
@@ -508,8 +470,6 @@ mult_Cohn_d(tukeyctrues, cats)
 </table>
 </div>
 
-
-
 ### Hypothesis 2 Findings and Recommendation:
 
 #### Findings:
@@ -522,11 +482,14 @@ mult_Cohn_d(tukeyctrues, cats)
 
 Top three revenue-generating categories: Meat/Poultry, Produce, and Dairy Products.
 
+<img src='https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_109_1.png' width=400>
+
+another look:
+
+<img src="https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_110_1.png" width=400>
+
 Statistically, Meat/Poultry & Produce were statistically equivalent and ranked as top sellers, Dairy & Produce were statiscally equal. 
 (Definition of statistically equal: they returned false value from Tukey test, indicating they had a simliar mean and therefore statiticaly equal with a .05 chance of falsely being classified as such)
-
-
- 
  
 Category | Average Revenue
 -- | -- |
@@ -554,10 +517,7 @@ Example: Meat/Poultry currently has 6 products, this could be expanded.  Convers
 Knowing what revenue each category generates could potentially influence the ability to appropriately categorize discounts.  However, not knowing profit margins - we'd need to take this into consideration.
 
 
-
-
-
-
+_______________
 # HYPOTHESIS 3
 
 > ***Do certain sales representatives sell more than others?  Who are the top sellers?***
@@ -566,268 +526,18 @@ $H0$: All sales representatives generate equal revenue.
 
 $H1$: Some sales representatives generate more than others in revenue.
 
-### Importing and inspecting data from Product, OrderDetail, Order and Employee Tables
+__
+For this test sql queries were conducted on Product, OrderDetail, Order and Employee Tables
 These table includes information on:
 
     1) Product information including SalesPrice, Discount and Quantity Sold
     2) Sales Representative Information
 
-
-```python
-cur.execute("""SELECT 
-                ProductID, 
-                ProductName, 
-                Discontinued,
-                OrderID, 
-                ProductID, 
-                od.UnitPrice AS SalesPrice, 
-                Quantity, 
-                Discount,
-                EmployeeID, 
-                LastName, 
-                FirstName, 
-                e.Region, 
-                ShippedDate
-                FROM Product AS p
-                JOIN OrderDetail AS od
-                ON od.ProductID = p.Id 
-                JOIN 'Order' AS o
-                ON o.Id = od.OrderId
-                JOIN Employee AS e
-                ON o.EmployeeID = e.ID;""")
-dfr = pd.DataFrame(cur.fetchall(), columns=[x[0] for x in cur.description])
-dfr
+A dataframe was compiled and a few calculations were made:
 ```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>ProductId</th>
-      <th>ProductName</th>
-      <th>Discontinued</th>
-      <th>OrderId</th>
-      <th>ProductId</th>
-      <th>SalesPrice</th>
-      <th>Quantity</th>
-      <th>Discount</th>
-      <th>EmployeeId</th>
-      <th>LastName</th>
-      <th>FirstName</th>
-      <th>Region</th>
-      <th>ShippedDate</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>0</td>
-      <td>11</td>
-      <td>Queso Cabrales</td>
-      <td>0</td>
-      <td>10248</td>
-      <td>11</td>
-      <td>14.00</td>
-      <td>12</td>
-      <td>0.00</td>
-      <td>5</td>
-      <td>Buchanan</td>
-      <td>Steven</td>
-      <td>British Isles</td>
-      <td>2012-07-16</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>42</td>
-      <td>Singaporean Hokkien Fried Mee</td>
-      <td>1</td>
-      <td>10248</td>
-      <td>42</td>
-      <td>9.80</td>
-      <td>10</td>
-      <td>0.00</td>
-      <td>5</td>
-      <td>Buchanan</td>
-      <td>Steven</td>
-      <td>British Isles</td>
-      <td>2012-07-16</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>72</td>
-      <td>Mozzarella di Giovanni</td>
-      <td>0</td>
-      <td>10248</td>
-      <td>72</td>
-      <td>34.80</td>
-      <td>5</td>
-      <td>0.00</td>
-      <td>5</td>
-      <td>Buchanan</td>
-      <td>Steven</td>
-      <td>British Isles</td>
-      <td>2012-07-16</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>14</td>
-      <td>Tofu</td>
-      <td>0</td>
-      <td>10249</td>
-      <td>14</td>
-      <td>18.60</td>
-      <td>9</td>
-      <td>0.00</td>
-      <td>6</td>
-      <td>Suyama</td>
-      <td>Michael</td>
-      <td>British Isles</td>
-      <td>2012-07-10</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>51</td>
-      <td>Manjimup Dried Apples</td>
-      <td>0</td>
-      <td>10249</td>
-      <td>51</td>
-      <td>42.40</td>
-      <td>40</td>
-      <td>0.00</td>
-      <td>6</td>
-      <td>Suyama</td>
-      <td>Michael</td>
-      <td>British Isles</td>
-      <td>2012-07-10</td>
-    </tr>
-    <tr>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <td>2150</td>
-      <td>64</td>
-      <td>Wimmers gute Semmelknödel</td>
-      <td>0</td>
-      <td>11077</td>
-      <td>64</td>
-      <td>33.25</td>
-      <td>2</td>
-      <td>0.03</td>
-      <td>1</td>
-      <td>Davolio</td>
-      <td>Nancy</td>
-      <td>North America</td>
-      <td>None</td>
-    </tr>
-    <tr>
-      <td>2151</td>
-      <td>66</td>
-      <td>Louisiana Hot Spiced Okra</td>
-      <td>0</td>
-      <td>11077</td>
-      <td>66</td>
-      <td>17.00</td>
-      <td>1</td>
-      <td>0.00</td>
-      <td>1</td>
-      <td>Davolio</td>
-      <td>Nancy</td>
-      <td>North America</td>
-      <td>None</td>
-    </tr>
-    <tr>
-      <td>2152</td>
-      <td>73</td>
-      <td>Röd Kaviar</td>
-      <td>0</td>
-      <td>11077</td>
-      <td>73</td>
-      <td>15.00</td>
-      <td>2</td>
-      <td>0.01</td>
-      <td>1</td>
-      <td>Davolio</td>
-      <td>Nancy</td>
-      <td>North America</td>
-      <td>None</td>
-    </tr>
-    <tr>
-      <td>2153</td>
-      <td>75</td>
-      <td>Rhönbräu Klosterbier</td>
-      <td>0</td>
-      <td>11077</td>
-      <td>75</td>
-      <td>7.75</td>
-      <td>4</td>
-      <td>0.00</td>
-      <td>1</td>
-      <td>Davolio</td>
-      <td>Nancy</td>
-      <td>North America</td>
-      <td>None</td>
-    </tr>
-    <tr>
-      <td>2154</td>
-      <td>77</td>
-      <td>Original Frankfurter grüne Soße</td>
-      <td>0</td>
-      <td>11077</td>
-      <td>77</td>
-      <td>13.00</td>
-      <td>2</td>
-      <td>0.00</td>
-      <td>1</td>
-      <td>Davolio</td>
-      <td>Nancy</td>
-      <td>North America</td>
-      <td>None</td>
-    </tr>
-  </tbody>
-</table>
-<p>2155 rows × 13 columns</p>
-</div>
-
-
-
-
-```python
-
-
 #Sales Revenue is calculated by multiplying the adjusted price (accounting for any discounts) times quantity
 dfr['SaleRev'] = (dfr['SalesPrice'] * (1-dfr['Discount'])) * dfr['Quantity']
-
 ```
-
 
 ```python
 empcount = len(dfr['EmployeeId'].unique())
@@ -839,51 +549,17 @@ print(f'The calculated avarage revenue generated by a sales representative in th
     There are 9 employees in this company associated with sales information
     The calculated avarage revenue generated by a sales representative in this dataset is $587.0
     
-
 ### Hypothesis 3 Preliminary Visualizations:
 
 
-```python
-fig, ax = plt.subplots(figsize=(8,5))
-sns.distplot(dfr['SaleRev'], color='green')
-plt.axvline(avrev, color='lightgreen' )
-plt.xlabel('Sales Revenue')
-plt.ylabel('Distribution')
-plt.title('Average Sales Revenue Distribution', fontsize=18)
-plt.show()
-```
+<img src="https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_126_0.png" width=400>
 
 
-![png](output_126_0.png)
-
-
-
-```python
-fig, ax = plt.subplots(figsize=(8,5))
-sns.barplot(data=dfr, x='EmployeeId', y='SaleRev', ci=68, ax=ax)
-plt.title('Average Revenue by Sales Representative', fontsize=16)
-plt.axhline(avrev,linestyle="--", color='gray', linewidth=.6 )
-plt.xlabel('Employee Id')
-plt.ylabel('Sales Revenue')
-plt.show()
-
-```
-
-
-![png](output_127_0.png)
+<img src="https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_127_0.png" width=400>
 
 
 Employees are listed in the table below:
 Although the employee names are unique, for the sake of data inspection we'll continue to use Employee Id as the unique identifier and reference the table above to gather additional insight.
-
-
-```python
-cur.execute("""SELECT ID, LastName, FirstName, Title, Region
-                from Employee""")
-empsdata = pd.DataFrame(cur.fetchall(), columns=[x[0] for x in cur.description])
-empsdata
-```
-
 
 
 
