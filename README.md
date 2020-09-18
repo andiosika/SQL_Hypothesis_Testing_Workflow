@@ -67,7 +67,7 @@ Discounts were distributed as follows:
  
  # Distributions appear roughly equal across all discount levels:
 
-<img src="https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_37_1.png">
+<img src="https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_37_1.png" size=40%>
 
 
 ### Since we are comparing multiple discounts to inspect it's impact on quantity ordered an AVNOVA or Kruksal test will be run depending on how assumptions are met: 
@@ -199,7 +199,7 @@ plt.ylabel('Average Quantity Purchased')
     Text(0, 0.5, 'Average Quantity Purchased')
 
 
-<img src="https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_70_1.png">
+<img src="https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_70_1.png" size= 40%>
 
 
 Effect Sizes: 
@@ -271,13 +271,11 @@ For this round of testing the Product and OrderDetail tables were queried using 
 
 ### Initial Visual Inspection and Observations:
 
-There are 8 different categories sold in this company that represent 77 products.
-
-The average revenue generated across all categories is `$587.00`
+There are 8 different categories sold in this company that represent 77 products, and the average revenue generated across all categories is `$587.00`
 
 Visually, it appears that there are three categories that significantly generate higher revenues than others, additional testing will demonstrate their siginficance and effect.
 
-<img src='https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_83_0.png'>
+<img src='https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_83_0.png' size=30% >
 
 
 ```python
@@ -336,207 +334,13 @@ else:
 ### Hypothesis 2: A Clean Vizualization
 
 
-<img src='https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_109_1.png'>
+<img src='https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_109_1.png' size=40%>
 
+another look:
 
+<img src="https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_110_1.png" size=30%>
 
-<img src="https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_110_1.png">
-
-
-
-![png](output_110_2.png)
-
-
-
-
-
-The folowing groups can reject the null hypothesis:
-
-
-```python
-tukeyctrues  = tukeycdf.loc[tukeycdf['reject']==True]
-tukeyctrues
-```
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>group1</th>
-      <th>group2</th>
-      <th>meandiff</th>
-      <th>p-adj</th>
-      <th>lower</th>
-      <th>upper</th>
-      <th>reject</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>2</td>
-      <td>Beverages</td>
-      <td>Dairy Products</td>
-      <td>194.0913</td>
-      <td>0.0010</td>
-      <td>78.8965</td>
-      <td>309.2860</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>Beverages</td>
-      <td>Meat/Poultry</td>
-      <td>411.0420</td>
-      <td>0.0010</td>
-      <td>265.7215</td>
-      <td>556.3625</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>Beverages</td>
-      <td>Produce</td>
-      <td>296.1055</td>
-      <td>0.0010</td>
-      <td>138.5160</td>
-      <td>453.6950</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <td>8</td>
-      <td>Condiments</td>
-      <td>Dairy Products</td>
-      <td>138.3200</td>
-      <td>0.0449</td>
-      <td>1.6769</td>
-      <td>274.9631</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <td>10</td>
-      <td>Condiments</td>
-      <td>Meat/Poultry</td>
-      <td>355.2707</td>
-      <td>0.0010</td>
-      <td>192.4225</td>
-      <td>518.1190</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <td>11</td>
-      <td>Condiments</td>
-      <td>Produce</td>
-      <td>240.3342</td>
-      <td>0.0010</td>
-      <td>66.4494</td>
-      <td>414.2191</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <td>13</td>
-      <td>Confections</td>
-      <td>Dairy Products</td>
-      <td>167.0244</td>
-      <td>0.0010</td>
-      <td>46.2712</td>
-      <td>287.7776</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <td>15</td>
-      <td>Confections</td>
-      <td>Meat/Poultry</td>
-      <td>383.9751</td>
-      <td>0.0010</td>
-      <td>234.2101</td>
-      <td>533.7401</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <td>16</td>
-      <td>Confections</td>
-      <td>Produce</td>
-      <td>269.0386</td>
-      <td>0.0010</td>
-      <td>107.3415</td>
-      <td>430.7357</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <td>18</td>
-      <td>Dairy Products</td>
-      <td>Grains/Cereals</td>
-      <td>-172.6879</td>
-      <td>0.0054</td>
-      <td>-314.2272</td>
-      <td>-31.1485</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <td>19</td>
-      <td>Dairy Products</td>
-      <td>Meat/Poultry</td>
-      <td>216.9507</td>
-      <td>0.0010</td>
-      <td>69.7626</td>
-      <td>364.1389</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <td>21</td>
-      <td>Dairy Products</td>
-      <td>Seafood</td>
-      <td>-240.2470</td>
-      <td>0.0010</td>
-      <td>-361.2959</td>
-      <td>-119.1982</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <td>22</td>
-      <td>Grains/Cereals</td>
-      <td>Meat/Poultry</td>
-      <td>389.6386</td>
-      <td>0.0010</td>
-      <td>222.6607</td>
-      <td>556.6164</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <td>23</td>
-      <td>Grains/Cereals</td>
-      <td>Produce</td>
-      <td>274.7021</td>
-      <td>0.0010</td>
-      <td>96.9438</td>
-      <td>452.4604</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <td>26</td>
-      <td>Meat/Poultry</td>
-      <td>Seafood</td>
-      <td>-457.1977</td>
-      <td>0.0010</td>
-      <td>-607.2012</td>
-      <td>-307.1942</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <td>27</td>
-      <td>Produce</td>
-      <td>Seafood</td>
-      <td>-342.2612</td>
-      <td>0.0010</td>
-      <td>-504.1792</td>
-      <td>-180.3432</td>
-      <td>True</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
+The comarison becomes complicated as each group needs to be compared against the other.  This was solved by creating a dataframe that compared group 1 (g1) to group 2 (g2) and results of [Tukey Testing](https://en.wikipedia.org/wiki/Tukey%27s_range_test) to determine if there was significant difference were collected. Subsequently Cohen's D was determined for each pair comparisson. 
 
 ```python
 def mult_Cohn_d(tukey_result_df, df_dict):
@@ -558,17 +362,12 @@ def mult_Cohn_d(tukey_result_df, df_dict):
     return mdc
 ```
 
-The table below illustrates those categories that can reject the null hypothesis that states all categories generate equal revenue.  The padj is the probability this is due to chance and the d column shows the effect size. 
+The table below illustrates those categories that can reject the null hypothesis that states all categories generate equal revenue.  The padj reflects probability and the d column shows the effect size. 
 
 
 ```python
 mult_Cohn_d(tukeyctrues, cats)
 ```
-
-
-
-
-<div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
