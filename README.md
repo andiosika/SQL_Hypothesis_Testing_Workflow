@@ -18,7 +18,7 @@ __
 
 ## Background
 
-A two year sales history was examined in a series of tables stored in a database.  The data provided focused primarly on sales information and did not include cost of goods, so ways were examined to maximize revenues in an effort to improve margins.  Several theories were developed and hypothesis were formed around ways to improve revenues.
+A two year sales history was examined in a series of tables stored in an SQL database.  The data provided focused primarly on sales information and did not include cost of goods, so ways were examined to maximize revenues in an effort to improve margins.  Several theories were developed and hypothesis were formed around ways to improve revenues.
 
 # Questions to be answered through hypothesis a/b testing:
 
@@ -38,7 +38,6 @@ ___
 <img src="https://raw.githubusercontent.com/jirvingphd/dsc-mod-3-project-online-ds-ft-100719/master/Northwind_ERD_updated.png">
 
 
-
 # HYPOTHESIS 1
 
 > ***Does discount amount have a statistically significant effect on the quantity of a product in an order? If so, at what level(s) of discount?***
@@ -49,8 +48,7 @@ ___
 
 
 To begin, in taking a look at the **OrderDetail table**, it was apparent I'd have the data I'd need - simply quantity and discount.  
-Once imported, the data was grouped by discount level and the means of the quantity sold for each were compared against each other to evaluate if they were statistically significantly different.  This will determine if the null hypothesis can be rejected with a probability of 5% error in reporting a false negative.
-
+Once imported, the data was grouped by discount level and the means of the quantity sold for each were compared against each other to evaluate if they were statistically significantly different.  The results can suggest if the null hypothesis can be rejected with a probability of 5% error in reporting a false negative.
 
 ### Some initial information was gathered:
 
@@ -207,7 +205,7 @@ ____
 - $𝐻1$ : Certain categories sell at statistically higher rates of revneu than others.
 - $𝐻1𝑎$ : 
 
-For this round of testing the Product and OrderDetail tables were queried using SQL.  These tables includes product information data including: categories, pricing, and discount information to generate revenues.
+For this round of testing the **Product** and **OrderDetail** tables were queried using SQL.  These tables includes product information data including: categories, pricing, and discount information to generate revenues.
 
 
 ### Background Observations after Initial Inspection:
@@ -236,20 +234,7 @@ In each of the different categories, the products align as such:
 
 ### Outliers were identified and removed via z-score testing, Levene's testing revealed the data was not of equal variance so Kruksal Wallance was conducted.  All sample sizes were greater than 15 so the assumption of normality was met.  
 
- Kruksal Testing yielded a p-value of 0.0 so we can reject the null hypothesis. However, since there are multiple products compared to each other, further testing is required.
-
-#### Visual Inspection Post Data Cleaning:
-
-    The average revenue for Dairy Products is $593.86
-    The average revenue for Grains/Cereals is $421.17
-    The average revenue for Produce is $695.87
-    The average revenue for Seafood is $353.61
-    The average revenue for Condiments is $455.54
-    The average revenue for Confections is $426.83
-    The average revenue for Beverages is $399.77
-    The average revenue for Meat/Poultry is $810.81
-    
-
+ Kruksal Testing yielded a p-value of 0.0 so we can reject the null hypothesis. However, since there are multiple products compared to each other, further testing is required.   
 ### Post-Hoc Testing: This got complicated since we are comparing each product to every other product individually.
 The comarison becomes complicated as each product needs to be compared against the other.  This was solved by creating a dataframe that compared group 1 (g1) to group 2 (g2) and results of [Tukey Testing](https://en.wikipedia.org/wiki/Tukey%27s_range_test) to determine if there was significant difference were collected. Subsequently Cohen's D was determined for each pair separately to examine individual effect size.
 
@@ -278,19 +263,6 @@ The table below illustrates those categories that can reject the null hypothesis
 ```python
 mult_Cohn_d(tukeyctrues, cats)
 ```
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -446,7 +418,7 @@ Produce | `$695.87`
 Dairy Products | `$593.86`
 Condiments | `$455.54`
 Confections | `$426.83`
-Grains/Cereals | `$421.17``
+Grains/Cereals | `$421.17`
 Beverages | `$399.77`
 Seafood | `$353.61`
 
@@ -456,13 +428,13 @@ Notes:
 Revenue is calculated by subtracting any extended discounts from the salesprice and multiplying that by quantity sold.
 
 
-#### Recommendation: 
+### Recommendation: 
 
-If there are additional products that align with the higher revenue generating categories, that category could be broadened to maximize revenue generating potential.  
+1) If there are additional products that align with the higher revenue generating categories, that category could be broadened to maximize revenue generating potential.  
 
 Example: Meat/Poultry currently has 6 products, this could be expanded.  Conversely, the seafood category carries 12 products which could be narrowed.  Additional analysis could demonstrate which seafood are the best sellers which would be preserved.
 
-Knowing what revenue each category generates could potentially influence the ability to appropriately categorize discounts.  However, not knowing profit margins - we'd need to take this into consideration.
+2) Knowing what revenue each category generates could potentially influence the ability to appropriately categorize discounts.  However, not knowing profit margins - we'd need to take this into consideration.
 
 _______________
 # HYPOTHESIS 3
@@ -502,7 +474,7 @@ Testing revealed again that equal variance did not exist, outliers were removed 
 
 <img src="https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_146_1.png" width=400>
 
-Observation:
+**Observation:**
 The plot above proved to be misleading since it goes off the mean, it skews the data.  Further testing indicates there are no statistical differences between representatives in terms of revenue generated over this time span.  The subsequent plot reveals a more accurate depiction of what testing demonstrates.
 
 With some outliers removed, the adjusted average revenue across all sales representatives: $494.72
@@ -514,14 +486,13 @@ With some outliers removed, the adjusted average revenue across all sales repres
 #### Findings:
 Both parametric and non parametric tests were conducted, despite indications for non-parametric tests as the dataset(s) did not meet the assupmtion of equal variance. A visual inspection after outlier removal suggested there could be significant variance in the mean and the parametric was run for comparison.  The parametric test indicated that the null hypothesis could be rejected.  However, post-hoc testing validated the efficacy of the non-parametric test to **accept the null hypothesis**, with the smallest probability that the outcome was due to chance was well over the accepted rate of .05. 
 
-The Hypothesis 3 Results Table above provides details on how each representative compares with one another and is itemized by the adjusted p values and d is the result of a Cohen D illustrating the effect size of each comparison.
 
 #### Recommendation:    
 If there is no statistical difference, and effect size is small at best, best practices can still be shared by those who have a higher average revenue, examples 2,3 and 9 still have higher than average sales.
     
 Perhaps a little healthy, insentivised competition might spur increased revenues if not by one, by many.  Also, building on knowledge of smaller discounts yielding larger quantities, sales team could increase revenue by being conservative with discount rates.
    
-    
+___    
 # HYPOTHESIS 4:
 
 > ***Where are the customers from that spend the most money?***
@@ -590,11 +561,9 @@ Eastern Europe | `$220.75
 
 For each group, the assumption for equal variance was not met and a Kruksal test was conducted.  The p value for the nonparametric kruskal test was singificant, which can reject the null hypothesis that all regions spend the same amounts with a 5% degree of error that this is due to chance.
 
-
 ### Visualization
 
 <img src="https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_196_0.png" width=400>
-
 
 Orders shipped to Western Europe, and North America and Northern Europe generated the highest amount of revenue, statistically these regions are equal:  
 
@@ -610,14 +579,13 @@ Region 1 | Region 2 | Adj P
  -- | -- | --|
 South America |	Southern Europe	| 0.2306		
 
-
 ** Noting that the sample size of Eastern Europe is relatively small and the confidence interval is much greater to accomodate for it, possibly skewing the results.
 
 ```python
 tukeyr.plot_simultaneous();
 ```
 
-<img src="https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_187_0.png">
+<img src="https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_187_0.png" width = 400>
 
 #### Recommendations:
 Explore best practices from regions that are top performers.  
@@ -633,10 +601,12 @@ The datasets were all multi group comparisons and none of the groups met all the
 It was discovered through hypothesis testing and data analysis, various ways to achieve this through: 
     Minimizing discounts
     Broadening Revenue Generating Categories
+    Explore best practices from top performing regions: North America, Northern Europe, and Western Europe
+    Conduct market analysis on regions that need to be developed: South America, Southern Europe as well as Eastern Europe
     
-    
-In addition, future analysis and testeing could provide insight to: 
+In addition, future analysis and testing could provide insight to: 
     Develop Regional Markets
     Develop Sales Staff
+    
     
    
