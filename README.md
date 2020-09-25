@@ -216,7 +216,7 @@ In each of the different categories, the products align as such:
 
  Kruksal Testing yielded a p-value of 0.0 so we can reject the null hypothesis. However, since there are multiple products compared to each other, further testing is required.   
 ### Post-Hoc Testing: This got complicated since we are comparing each product to every other product individually.
-The comarison becomes complicated as each product needs to be compared against the other.  This was solved by creating a dataframe that compared group 1 (g1) to group 2 (g2) and results of [Tukey Testing](https://en.wikipedia.org/wiki/Tukey%27s_range_test) to determine if there was significant difference were collected. Subsequently Cohen's D was determined for each pair separately to examine individual effect size.
+The comparison becomes complicated as each product needs to be compared against the other.  This was solved by creating a dataframe that compared group 1 (g1) to group 2 (g2) and results of [Tukey Testing](https://en.wikipedia.org/wiki/Tukey%27s_range_test) to determine if there was significant difference were collected. Subsequently Cohen's D was determined for each pair separately to examine individual effect size.
 
 ```python
 def mult_Cohn_d(tukey_result_df, df_dict):
