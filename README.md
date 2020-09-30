@@ -192,9 +192,6 @@ For this round of testing the **Product** and **OrderDetail** tables were querie
 
 There are 8 different categories sold in this company that represent 77 products, and the average revenue generated across all categories is `$587.00`
 
-Visually, it appears that there are three categories that significantly generate higher revenues than others, additional testing will demonstrate their siginficance and effect.
-
-<img src='https://github.com/andiosika/SQL_Hypothesis_Testing_Workflow/blob/master/imgs/output_83_0.png' width=400>
 
 ```python
 cats = {}
