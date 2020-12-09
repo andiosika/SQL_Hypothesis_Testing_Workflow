@@ -576,14 +576,14 @@ Since the data provided did not include purchase prices of merchandise, ways wer
 The datasets were all multi group comparisons and none of the groups met all the assupmtions for parametric testing.  All groups called for Kruskal-Wallis and post-hoc testing detailed in this notebook.
 
 It was discovered through hypothesis testing and data analysis, various ways to achieve this through: 
-    Minimizing discounts
-    Broadening Revenue Generating Categories
-    Explore best practices from top performing regions: North America, Northern Europe, and Western Europe
-    Conduct market analysis on regions that need to be developed: South America, Southern Europe as well as Eastern Europe
+    * Minimizing discounts
+    * Broadening Revenue Generating Categories
+    * Explore best practices from top performing regions: North America, Northern Europe, and Western Europe
+    * Conduct market analysis on regions that need to be developed: South America, Southern Europe as well as Eastern Europe
     
 In addition, future analysis and testing could provide insight to: 
-    Develop Regional Markets
-    Develop Sales Staff
+    * Develop Regional Markets
+    * Develop Sales Staff
     
     
    
