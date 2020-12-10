@@ -585,8 +585,8 @@ It was discovered through hypothesis testing and data analysis, various ways to 
     
 In addition, future analysis and testing could provide insight to: 
 
-    - Develop Regional Markets
-    - Develop Sales Staff
+    * Develop Regional Markets
+    * Develop Sales Staff
     
     
    
