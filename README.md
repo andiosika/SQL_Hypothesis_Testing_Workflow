@@ -3,7 +3,7 @@
 ___
 ## Main Files:
 
-student.ipynb - Notebook inclues data, methodologies and modeling around hypothesis testing
+SQL_Hypothesis_Testing.ipynb - Notebook inclues data, methodologies and modeling around hypothesis testing
 
 Mod_3_preso.pdf - presentation summarizing findings for a non-technical audience
 
