@@ -1,4 +1,4 @@
-
+##Cohen_d to determin effect size used to indicate the standardised difference between two means
 def Cohen_d(group1, group2, correction = False):
     """Compute Cohen's d
     d = (group1.mean()-group2.mean())/pool_variance.
